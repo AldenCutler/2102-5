@@ -87,28 +87,24 @@ body {
     function pickStudent() {
         let randomStudentNum = Math.floor(Math.random() * students.length);
         let student = students[randomStudentNum];
-        let element = document.getElementById("picked");
-        element.innerHTML = student.first + " " + student.last;
+        document.getElementById("picked").innerHTML = student.first + " " + student.last;
     }
 
     let pickButton = document.getElementById("pickStudent");
     pickButton.addEventListener("click", pickStudent);
 
     function renderList() {
-        console.log("renderList", students);
         students.sort(function(a, b) { return a.clickcount - b.clickcount })
         content = "";
         for (let i = 0; i < students.length; i++) {
             content += `<div class="student" id="${students[i].username}">${students[i].first} ${students[i].last} <br> Times Participated: ${students[i].clickcount}</div>`;
         }
-        let element = document.getElementById("container");
-        element.innerHTML = content;
+        document.getElementById("container").innerHTML = content;
     }
 
     renderList();
 
     function listclick(e) {
-        console.log("listclick", e.target.id)
         for (let i = 0; i < students.length; i++) {
             if (students[i].username == e.target.id) {
                 students[i].clickcount++;
@@ -117,8 +113,7 @@ body {
         renderList();
     }
 
-    let renderclick = document.getElementById("container");
-    renderclick.addEventListener("click", listclick);
+    document.getElementById("container").addEventListener("click", listclick);
     </script>
 </body>
 
