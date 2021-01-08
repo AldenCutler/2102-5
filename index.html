@@ -1,33 +1,30 @@
-
-
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+<title>2102-5a</title>
 
-<head>
-
-  <meta charset="UTF-8">
-  
-<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
-<meta name="apple-mobile-web-app-title" content="CodePen">
-
-<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
-
-<link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
-
-
-  <title>CodePen - 2101-5</title>
-  
-  
-  
-  
 <style>
+body {
+  background-color: lightgrey; 
+}
 .student {
-  display: flex;
-  margin: auto;
-  border: ridge;
-  font-size: 24px;
-  justify-content: center;
-  width: 400px;
+    border-style: ridge;
+    border-color: rgb(100,100,100);
+    font-size: 24px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+    margin: auto;
+}
+
+#pickStudent {
+    display: flex;
+    margin: auto;
+    font-size: 16px;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #randomStudent {
@@ -39,105 +36,90 @@
   padding-bottom: 20px;
 }
 
-button {
-  display: flex;
+#container{
   margin: auto;
-  font-size: 16px;
+  border: ridge;
+  border-color: rgb(100,100,100);
+  font-size: 24px;
   justify-content: center;
+  width: 400px;
 }
 
-#pickStudent {
-  padding-top: 10px;
-}
+
 </style>
 
-  
-  
-  
-  
+<body translate="no">
+    <button id="pickStudent" onclick="pickStudent()">
+        Pick Random Student
+    </button>
+    <div id="randomStudent">
+        Random Student: <span id="picked"></span>
+    </div>
+    <div id="container">
+        ...
+    </div>
+    <script id="rendered-js">
+    console.clear();
 
-</head>
+    const students = [];
 
-<body translate="no" >
-  <button id="" onclick="pickStudent()">Pick Student</button>
+    function makeStudent(username, first, last, gradeLevel) {
+        const student = {};
+        student.username = username;
+        student.first = first;
+        student.last = last;
+        student.gradeLevel = gradeLevel;
+        student.clickcount = 0;
+        return student;
+    }
 
-<div id="randomStudent">Random Student: <span id='picked'> </span></div>
+    students.push(makeStudent("aldencutler", "Alden", "Cutler", 11));
+    students.push(makeStudent("isaacallnutt", "Isaac", "Allnutt", 12));
+    students.push(makeStudent("giangaspar", "Gian", "Gaspar", 11));
+    students.push(makeStudent("mckenzieroberts", "McKenzie", "Roberts", 11));
+    students.push(makeStudent("samsakaguchi", "Sam", "Sakaguchi", 11));
+    students.push(makeStudent("fionaalhadeff", "Fiona", "Alhadeff", 11));
+    students.push(makeStudent("itaimalakoff", "Itai", "Malakoff", 11));
+    students.push(makeStudent("emmasindeldempcy", "Emma", "Sindel-Dempcy", 11));
+    students.push(makeStudent("johnsawyer", "John", "Sawyer", 11));
+    students.push(makeStudent("edencampbell", "Eden", "Campbell", 11));
 
-<div id="container">
-  <div class="student" id="student1"></div>
-  <div class="student" id="student2"></div>
-  <div class="student" id="student3"></div>
-  <div class="student" id="student4"></div>
-  <div class="student" id="student5"></div>
-  <div class="student" id="student6"></div>
-  <div class="student" id="student7"></div>
-  <div class="student" id="student8"></div>
-  <div class="student" id="student9"></div>
-  <div class="student" id="student10"></div>
-</div>
-  
-  
-      <script id="rendered-js" >
-console.clear();
+    function pickStudent() {
+        let randomStudentNum = Math.floor(Math.random() * students.length);
+        let student = students[randomStudentNum];
+        let element = document.getElementById("picked");
+        element.innerHTML = student.first + " " + student.last;
+    }
 
-const students = [];
+    let pickButton = document.getElementById("pickStudent");
+    pickButton.addEventListener("click", pickStudent);
 
-function makeStudent(username, first, last, grade) {
-  const student = {};
-  student.username = username;
-  student.first = first;
-  student.last = last;
-  student.grade = grade;
-  return student;
-}
+    function renderList() {
+        console.log("renderList", students);
+        students.sort(function(a, b) { return a.clickcount - b.clickcount })
+        content = "";
+        for (let i = 0; i < students.length; i++) {
+            content += `<div class="student" id="${students[i].username}">${students[i].first} ${students[i].last} <br> Times Participated: ${students[i].clickcount}</div>`;
+        }
+        let element = document.getElementById("container");
+        element.innerHTML = content;
+    }
 
-function pickStudent() {
-  let randomStudentNum = Math.floor(Math.random() * students.length);
-  student = students[randomStudentNum];
-  document.getElementById("picked").innerHTML =
-    student.first + " " + student.last;
-}
+    renderList();
 
-students.push(makeStudent("aldencutler", "Alden", "Cutler", 11));
-students.push(makeStudent("isaacallnutt", "Isaac", "Allnutt", 12));
-students.push(makeStudent("giangaspar", "Gian", "Gaspar", 11));
-students.push(makeStudent("mckenzieroberts", "McKenzie", "Roberts", 11));
-students.push(makeStudent("samsakaguchi", "Sam", "Sakaguchi", 11));
-students.push(makeStudent("fionaalhadeff", "Fiona", "Alhadeff", 11));
-students.push(makeStudent("itaimalakoff", "Itai", "Malakoff", 11));
-students.push(makeStudent("emmasindeldempcy", "Emma", "Sindel-Dempcy", 11));
-students.push(makeStudent("johnsawyer", "John", "Sawyer", 11));
-students.push(makeStudent("edencampbell", "Eden", "Campbell", 11));
+    function listclick(e) {
+        console.log("listclick", e.target.id)
+        for (let i = 0; i < students.length; i++) {
+            if (students[i].username == e.target.id) {
+                students[i].clickcount++;
+            }
+        }
+        renderList();
+    }
 
-function updateStudentList() {
-  document.getElementById("student1").innerHTML =
-    students[0].first + " " + students[0].last;
-  document.getElementById("student2").innerHTML =
-    students[1].first + " " + students[1].last;
-  document.getElementById("student3").innerHTML =
-    students[2].first + " " + students[2].last;
-  document.getElementById("student4").innerHTML =
-    students[3].first + " " + students[3].last;
-  document.getElementById("student5").innerHTML =
-    students[4].first + " " + students[4].last;
-  document.getElementById("student6").innerHTML =
-    students[5].first + " " + students[5].last;
-  document.getElementById("student7").innerHTML =
-    students[6].first + " " + students[6].last;
-  document.getElementById("student8").innerHTML =
-    students[7].first + " " + students[7].last;
-  document.getElementById("student9").innerHTML =
-    students[8].first + " " + students[8].last;
-  document.getElementById("student10").innerHTML =
-    students[9].first + " " + students[9].last;
-}
-
-setInterval(updateStudentList, 1000);
+    let renderclick = document.getElementById("container");
+    renderclick.addEventListener("click", listclick);
     </script>
-
-  
-
 </body>
 
 </html>
- 
